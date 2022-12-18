@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ToyAssembler</title>
+  <meta name="description" content="Virtual simple machine code computer">
+  <meta name="author" content="Paul Torrington & Noah">
+<style>
+</style>
+</head>
+
+<body>
+<h1>Simple Computer</h1>
+<p id="output">output</p>
+<div>
+    <h3>Structure and operations</h3>
+    <table><tr><td>The computer is created with:</td><td><code>let _ = new simpleComputer()</code></td> </tr>
+        <tr><td>And run with:</td><td><code>      _.run(code, debug)</code></td> </tr>
+    </table>
+    <table>
+        <tr><th>Opcode</th><th>action    </th><th>Explanation</th><th></th></tr>
+        <tr><td>0</td><td>acc = []       </td><td></td><td></td></tr>
+        <tr><td>1</td><td>mem[] => acc   </td><td></td><td></td></tr>
+        <tr><td>2</td><td>mem[] => acc   </td><td></td><td></td></tr>
+        <tr><td>3</td><td>acc = acc + mem[]  </td><td></td><td></td></tr>
+        <tr><td>4</td><td>acc = acc - mem[] </td><td></td><td></td></tr>
+        <tr><td>5</td><td>if(acc=0) jump[]  </td><td></td><td></td></tr>
+        <tr><td>6</td><td>print(acc)  </td><td></td><td></td></tr>
+        <tr><td>7</td><td>*reserved* </td><td></td><td></td></tr>
+        <tr><td>8</td><td>End and return </td><td></td><td></td></tr>
+    </table>
+    <br/>
+    <table>
+        <tr><td>Acc(umulator)</td></tr>
+     <tr> <td>mem[0,1,2,3,4]</td></tr>
+      <tr> <td>Instructions [[],[]]</td></tr>
+      <tr><td>currentLine   </td></tr>
+                      
+    </table>
+
+
+</div>
+</body>
+<script src="./machine.js"></script>
+<script>
+let comp = new simpleComputer()
+
+console.log(comp.run([
+    [0, 3],
+    [1, 0],
+    [3, 0],
+    [6, 0],
+    [8, 0]
+    ]))
+
+
+</script>
+</html>
