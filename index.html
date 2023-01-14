@@ -6,14 +6,34 @@
   <meta name="description" content="Virtual simple machine code computer">
   <meta name="author" content="Paul Torrington & Noah">
 <style>
+  input[type=text] {
+    padding: 0  0 0 10px;
+    margin:0 5px ;
+    width: 40px; 
+  }
 </style>
 </head>
 
 <body>
 <h1>Simple Computer</h1>
-<p id="output">output</p>
+
+<p id="demo"></p>
 <div>
-    <h3>Structure and operations</h3>
+    <p>1.<input type="text" id="1A" value="0"><input type="text" id="1B" value="3"><span id="1out"></span></p>
+    <p>2.<input type="text" id="2A" value="1"><input type="text" id="2B" value="0"><span id="2out"></span></p>
+    <p>3.<input type="text" id="3A" value="0"><input type="text" id="3B" value="4"><span id="3out"></span></p>
+    <p>4.<input type="text" id="4A" value="3"><input type="text" id="4B" value="0"><span id="4out"></span></p>
+    <p>5.<input type="text" id="5A" value="6"><input type="text" id="5B" value=""><span id="5out"></span></p>
+    <p>6.<input type="text" id="6A" value="8"><input type="text" id="6B" value="0"><span id="6out"></span></p>
+    <p>7.<input type="text" id="4A" value=""><input type="text" id="4B" value=""><span id="7out"></span></p>
+    <p>8.<input type="text" id="5A" value=""><input type="text" id="5B" value=""><span id="8out"></span></p>
+    <p>9.<input type="text" id="6A" value=""><input type="text" id="6B" value=""><span id="9out"></span></p>
+
+    <p>  <button onclick="getDataAndRun()">Run</button>    Output: <span id="output">output</span></p>
+
+   
+
+    <p>Structure and operations</p>
     <table><tr><td>The computer is created with:</td><td><code>let _ = new simpleComputer()</code></td> </tr>
         <tr><td>And run with:</td><td><code>      _.run(code, debug)</code></td> </tr>
     </table>
@@ -42,17 +62,40 @@
 </div>
 </body>
 <script src="./machine.js"></script>
+<script src="./assembler.js"></script>
 <script>
 let comp = new simpleComputer()
 
-console.log(comp.run([
-    [0, 3],
-    [1, 0],
-    [3, 0],
-    [6, 0],
-    [8, 0]
-    ]))
+function getDataAndRun(){
+    
+    const numberOfEntryLines = 6
+    instructions = []
+    for (let i = 0; i < numberOfEntryLines ; i++) {
+         instructions.push([
+            Number(document.getElementById((i+1) + 'A').value),
+            Number(document.getElementById((i+1) + 'B').value)
+        ])
+        
+    } 
+    let result = comp.run(instructions)
+    document.getElementById('output').innerHTML = result
+}
 
+
+
+
+
+// comp.run(
+//     parseAssembler(
+//     `  in 3 
+//        to 0
+//        in 4
+//        add 0
+//        prt
+//        end 0
+//           `
+//     )
+// , ()=>{})
 
 </script>
 </html>
