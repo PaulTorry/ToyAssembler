@@ -6,3 +6,13 @@ console.log(comp.run([
     [6, 0],
     [8, 0]
     ]))
+
+
+in 5  
+to 0  
+in 4   
+add 0  
+prt 
+to 0  
+in 0 
+if 2

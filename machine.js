@@ -21,13 +21,14 @@ class simpleComputer {
       (x) => { if (!this.acc) this.currentOp = x - 1 }, //             to  5
       (x) => { this.print(x || this.acc) }, //                         fr  6
       (x) => { console.log('mError command unknown') }, //             res 7
-      (x) => { this.running = false; this.print('mEnd code:' + x) } // end 8
+      (x) => { this.running = false; this.print('Ending with code:' + x) } // end 8
     ]
   }
 
   run (instructions = [[6, 2], [8, 0]], debug = () => {}) {
     this.currentOp = 0
     this.totalOps = 0
+    this.printed = ''
     this.instructionMem = instructions
     this.running = true
     while (this.running && this.totalOps < 20) {
@@ -45,6 +46,6 @@ class simpleComputer {
 
   print (x) {
     // console.log(' mPprinting', x)
-    this.printed = this.printed.concat(['| op ' + this.currentOp + 'val ' + x])
+    this.printed = this.printed.concat(['| op ' + this.currentOp + ' val ' + x])
   }
 }
