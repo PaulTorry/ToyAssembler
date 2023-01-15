@@ -40,15 +40,15 @@
     </table>
     <table>
         <tr><th>Opcode</th><th>action    </th><th>Explanation</th><th></th></tr>
-        <tr><td>0</td><td>acc = []       </td><td></td><td></td></tr>
+        <tr><td>0</td><td>[] => acc       </td><td></td><td></td></tr>
         <tr><td>1</td><td>acc => mem[]    </td><td></td><td></td></tr>
         <tr><td>2</td><td>mem[] => acc  </td><td></td><td></td></tr>
-        <tr><td>3</td><td>acc = acc + mem[]  </td><td></td><td></td></tr>
-        <tr><td>4</td><td>acc = acc - mem[] </td><td></td><td></td></tr>
+        <tr><td>3</td><td>acc + mem[] => acc </td><td></td><td></td></tr>
+        <tr><td>4</td><td>acc - mem[] => acc </td><td></td><td></td></tr>
         <tr><td>5</td><td>if(acc=0) jump[]  </td><td></td><td></td></tr>
-        <tr><td>6</td><td>print(acc)  </td><td></td><td></td></tr>
+        <tr><td>6</td><td>print([] or acc)  </td><td></td><td></td></tr>
         <tr><td>7</td><td>*reserved* </td><td></td><td></td></tr>
-        <tr><td>8</td><td>End and return </td><td></td><td></td></tr>
+        <tr><td>8</td><td>End and return [] </td><td></td><td></td></tr>
     </table>
     <br/>
     <table>
@@ -72,33 +72,30 @@ function getDataAndRun(){
     const numberOfEntryLines = 9
     instructions = []
     for (let i = 0; i < numberOfEntryLines ; i++) {
-      //  console.log("n", document.getElementById((i) + 'A'))
          instructions.push([
             Number(document.getElementById((i) + 'A').value),
             Number(document.getElementById((i) + 'B').value)
         ])
         
     } 
-    console.log(instructions);
-    let result = comp.run(instructions, console.log)
+    // console.log(instructions);
+    let result = comp.run(instructions)
     document.getElementById('output').innerHTML = result
 }
 
 
-
-
-
-// comp.run(
-//     parseAssembler(
-//     `  in 3 
-//        to 0
-//        in 4
-//        add 0
-//        prt
-//        end 0
-//           `
-//     )
-// , ()=>{})
+console.log(  comp.run(
+    parseAssembler(
+    `  in 3  
+       to 0  
+       in 4   
+       add 0  
+       prt   
+       end 0  
+          `
+    )
+  )
+)
 
 </script>
 </html>

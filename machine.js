@@ -18,10 +18,10 @@ class simpleComputer {
       (x) => { this.acc = this.mem[x] }, //                            fr  2
       (x) => { this.acc = this.acc + this.mem[x] }, //                 add 3
       (x) => { this.acc = this.acc - this.mem[x] }, //                 sub 4
-      (x) => { if (!this.acc) this.currentOp = x -1 }, //                 to  5
+      (x) => { if (!this.acc) this.currentOp = x - 1 }, //             to  5
       (x) => { this.print(x || this.acc) }, //                         fr  6
-      (x) => { console.log('mError command unknown') }, //              res 7
-      (x) => { this.running = false; this.print('mEnd code:' + x) } //  end 8
+      (x) => { console.log('mError command unknown') }, //             res 7
+      (x) => { this.running = false; this.print('mEnd code:' + x) } // end 8
     ]
   }
 
@@ -33,7 +33,7 @@ class simpleComputer {
     while (this.running && this.totalOps < 20) {
       //  console.log('running', this.currentOp, this.running)
       const [op, on] = this.instructionMem[this.currentOp]
-      debug(' mDebug step:', this.totalOps,'line:', this.currentOp,  'op:', op, 'on:', on)
+      debug(' mDebug step:', this.totalOps, 'line:', this.currentOp, 'op:', op, 'on:', on)
       this.ops[op](on)
       debug('    mDebug:line:', this.currentOp, 'acc', this.acc, 'mem', this.mem.toString())
       this.currentOp++
@@ -45,6 +45,6 @@ class simpleComputer {
 
   print (x) {
     // console.log(' mPprinting', x)
-    this.printed = this.printed.concat(["| op " + this.currentOp + "val " +  x])
+    this.printed = this.printed.concat(['| op ' + this.currentOp + 'val ' + x])
   }
 }
