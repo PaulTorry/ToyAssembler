@@ -97,8 +97,8 @@ function getDataAndRun(){
 
 function getAssemblerAndRun() {
   text = document.getElementById('assemblertext').value
-  code = parseAssembler(text)
-  let result = comp.run(code)
+  code = advancedAssembler(text)
+  let result = comp.run(code, console.log)
   document.getElementById('assembleroutput').innerHTML = result
 }
 
