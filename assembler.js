@@ -1,49 +1,55 @@
-const assCode = ['in', 'to', 'fr', 'add', 'sub', 'if', 'prt', '**', 'end']
+const assCode = ['in', 'to', 'fr', 'add', 'dec', 'if', 'prt', 'goto', 'end']
 
-function parseAssembler (text) { // eslint-disable-line no-unused-vars
-  // console.log(text)
-  const lines = text.split('\n')
-  // console.log(lines)
-  const trimmed = lines.map((x) => x.trim())
-  // console.log(trimmed)
-  const separated = trimmed.map((x) => x.split(' '))
-  // console.log(...separated)
-  separated.forEach((e, i) => { if (e.length > 2) console.log('to many words', e, i) })
-  const replaced = separated.map(([com, val]) => [assCode.indexOf(com), Number(val)])
-  // console.log(...replaced)
+const splitText = (x) => x.split('\n').map((x) => x.trim()).map((x) => x.split(' '))
 
-  return replaced
-}
+const simpleAssembler = (x) => x.map(([com, val]) => [assCode.indexOf(com), Number(val)])
 
-function advancedAssembler (text) { // eslint-disable-line no-unused-vars
-  const variables = ['cat']
-
-  const lines = text.split('\n')
-
-  const trimmed = lines.map((x) => x.trim())
-
-  const separated = trimmed.map((x) => x.split(' '))
-  console.log(...separated)
-
-  separated.forEach((e, i) => { if (e.length > 2) console.log('to many words', e, i) })
-
+function advancedAssembler (separated) { // eslint-disable-line no-unused-vars
+  const variables = ['r0', 'r1', 'r2']
+  const labels = []
   const replaced = []
+
   separated.forEach((v, i, a) => {
     const [com, val] = v
-    if (assCode.indexOf(com) + 1) {
+    if (assCode.indexOf(com) !== -1) {
       const value = variables.indexOf(val) + 1 ? variables.indexOf(val) : Number(val)
       replaced.push([assCode.indexOf(com), value])
     } else if (com === 'def') {
       variables.push(val)
-    } else if (variables.indexOf(com) + 1) {
-      replaced.concat([0, Number(val)], [1, variables.indexOf(com)])
-    } else if (com === 'mult') {
-      // muliply memory by accumulator
-      // let multCode = [['def', 'stack'], ['def', 'store'], ['to', 'stack'], ]
-    }
-    //  {return [assCode.indexOf(com), Number(val)]}
+    } else if (com === 'label') {
+      labels.push([val, replaced.length])
+    } else if (com === 'jmp') {
+      replaced.push(['jmp', val])
+    } else if (com === 'jif') {
+      replaced.push(['jif', val])
+    } else { console.log('command not found', v) }
   })
-  console.log('hi', ...replaced, variables)
+
+  const substituted = replaced.map(([com, val]) => {
+    if (com === 'jmp') return [7, Number(labels.filter(x => x[0] === val)[0][1])]
+    else if (com === 'jif') return [5, Number(labels.filter(x => x[0] === val)[0][1])]
+    else return [com, val]
+  })
+
+  console.log('compiled machnie code:', 'r', replaced, 's', substituted, 'v', variables, 'l', labels)
+
+  return substituted
+}
+
+function bLang (separated) {
+  const replaced = []
+
+  separated.forEach((v, i, a) => {
+    const [com, ...vals] = v
+    if (com === 'inc') {
+      replaced.push(['to', 'r0'], ['in', 1], ['add', vals[0]], ['to', vals[0]], ['fr', 'r0'])
+    } if (com === 'mult') {
+      replaced.push(['to', 'r0'], ['fr', 1], ['add', vals[0]], ['to', vals[0]], ['fr', 'r0'])
+    } else {
+      replaced.push([com, ...vals])
+    }
+  })
+  console.log('compiled B code:', replaced)
 
   return replaced
 }
