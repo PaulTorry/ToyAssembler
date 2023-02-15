@@ -1,4 +1,4 @@
-const assCode = ['in', 'to', 'fr', 'add', 'dec', 'if', 'prt', 'goto', 'end']
+const assCode = ['inp', 'sto', 'ret', 'add', 'dec', 'cjp', 'jmp', 'res', 'prt', 'end']
 
 const splitText = (x) => x.split('\n').map((x) => x.trim()).map((x) => x.split(' '))
 
@@ -11,27 +11,29 @@ function advancedAssembler (separated) { // eslint-disable-line no-unused-vars
 
   separated.forEach((v, i, a) => {
     const [com, val] = v
-    if (assCode.indexOf(com) !== -1) {
+    if (com && Number(com) + 1) {
+      replaced.push([Number(com), Number(val)])
+    } else if (assCode.indexOf(com) + 1) {
       const value = variables.indexOf(val) + 1 ? variables.indexOf(val) : Number(val)
       replaced.push([assCode.indexOf(com), value])
-    } else if (com === 'def') {
+    } else if (com === 'defn') {
       variables.push(val)
     } else if (com === 'label') {
       labels.push([val, replaced.length])
-    } else if (com === 'jmp') {
-      replaced.push(['jmp', val])
-    } else if (com === 'jif') {
-      replaced.push(['jif', val])
+    } else if (com === 'goto') {
+      replaced.push(['goto', val])
+    } else if (com === 'goif') {
+      replaced.push(['goif', val])
     } else { console.log('command not found', v) }
   })
 
   const substituted = replaced.map(([com, val]) => {
-    if (com === 'jmp') return [7, Number(labels.filter(x => x[0] === val)[0][1])]
-    else if (com === 'jif') return [5, Number(labels.filter(x => x[0] === val)[0][1])]
+    if (com === 'goto') return [6, Number(labels.filter(x => x[0] === val)[0][1])]
+    else if (com === 'goif') return [5, Number(labels.filter(x => x[0] === val)[0][1])]
     else return [com, val]
   })
 
-  console.log('compiled machnie code:', 'r', replaced, 's', substituted, 'v', variables, 'l', labels)
+  console.log('compiled machine code:', 'r', replaced, 's', substituted, 'v', variables, 'l', labels)
 
   return substituted
 }

@@ -1,165 +1,202 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>ToyAssembler</title>
   <meta name="description" content="Virtual simple machine code computer">
   <meta name="author" content="Paul Torrington & Noah">
-<style>
-  input[type=text] {
-    padding: 0  0 0 10px;
-    margin:0 5px ;
-    width: 40px; 
-  }
-</style>
+
+  <script src="./examples.js"></script>
+<script src="./machine.js"></script>
+<script src="./assembler.js"></script>
+<script src="./debugger.js"></script>
+<script src="./webpageCode.js"></script>
+
+  <style>
+    input[type=text] {
+      padding: 0 0 0 10px;
+      margin: 0 5px;
+      width: 30px;
+    }
+    div {
+      float: left;
+      padding-top: 10px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-left: 20px;
+    }
+  </style>
 </head>
 
 <body>
-<h1>Simple Computer</h1>
+  <h1>Simple Computer</h1>
 
-<p id="demo"></p>
-<div>
+  <p id="demo"></p>
+  <div>
     <p>0.<input type="text" id="0A" value="0"><input type="text" id="0B" value="3"><span id="0out"></span></p>
     <p>1.<input type="text" id="1A" value="1"><input type="text" id="1B" value="0"><span id="1out"></span></p>
     <p>2.<input type="text" id="2A" value="0"><input type="text" id="2B" value="4"><span id="2out"></span></p>
     <p>3.<input type="text" id="3A" value="3"><input type="text" id="3B" value="0"><span id="3out"></span></p>
-    <p>4.<input type="text" id="4A" value="6"><input type="text" id="4B" value=""><span id="4out"></span></p>
-    <p>5.<input type="text" id="5A" value="8"><input type="text" id="5B" value="0"><span id="5out"></span></p>
+    <p>4.<input type="text" id="4A" value="8"><input type="text" id="4B" value=""><span id="4out"></span></p>
+    <p>5.<input type="text" id="5A" value="9"><input type="text" id="5B" value="0"><span id="5out"></span></p>
     <p>6.<input type="text" id="6A" value=""><input type="text" id="6B" value=""><span id="6out"></span></p>
     <p>7.<input type="text" id="7A" value=""><input type="text" id="7B" value=""><span id="7out"></span></p>
     <p>8.<input type="text" id="8A" value=""><input type="text" id="8B" value=""><span id="8out"></span></p>
     <p>9.<input type="text" id="9A" value=""><input type="text" id="9B" value=""><span id="9out"></span></p>
 
-    <p>  <button onclick="getDataAndRun()">Run</button>    Output: <span id="output">output</span></p>
+    <p> <button onclick="getDataAndRun()">Run</button> Output: <span id="output">output</span></p>
 
-   
-
-    <p>Structure and operations</p>
-    <table><tr><td>The computer is created with:</td><td><code>let _ = new simpleComputer()</code></td> </tr>
-        <tr><td>And run with:</td><td><code>      _.run(code, debug)</code></td> </tr>
-    </table>
-    <table>
-        <tr><th>Opcode</th><th>action    </th><th>Explanation</th><th></th></tr>
-        <tr><td>0</td><td>in</td><td>[] => acc       </td><td></td><td></td></tr>
-        <tr><td>1</td><td>to</td><td>acc => mem[]    </td><td></td><td></td></tr>
-        <tr><td>2</td><td>fr</td><td>mem[] => acc  </td><td></td><td></td></tr>
-        <tr><td>3</td><td>add</td><td>acc + mem[] => acc </td><td></td><td></td></tr>
-        <tr><td>4</td><td>sub</td><td>acc - mem[] => acc </td><td></td><td></td></tr>
-        <tr><td>5</td><td>if</td><td>if(acc=0) jump[]  </td><td></td><td></td></tr>
-        <tr><td>6</td><td>prt</td><td>print([] or acc)  </td><td></td><td></td></tr>
-        <tr><td>7</td><td>**</td><td>*reserved* </td><td></td><td></td></tr>
-        <tr><td>8</td><td>end</td><td>End and return [] </td><td></td><td></td></tr>
-    </table>
-    <br/>
-    <table>
-        <tr><td>Acc(umulator)</td></tr>
-     <tr> <td>mem[0,1,2,3,4]</td></tr>
-      <tr> <td>Instructions [[],[]]</td></tr>
-      <tr><td>currentLine   </td></tr>
-                      
-    </table>
+  </div>
 
 
-
-
-
-
-
-
-    <textarea id="assemblertext" rows="10" cols="30">
-label moo
-def tot
-def loop
-def mand
-def mer
-in 3  
-to mer
-to loop
-in 5
-to mand
-to tot
+  <div>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load Last</button>
+    <button onclick="load(-1)">Load Prev</button>
+    <button onclick="load(1)">Load Next</button>
+    <button onclick="clearMem()">Clear</button>
+    <br>
+    <textarea id="assemblertext" rows="20" cols="40">
+label moo 
+defn tot
+defn loop
+defn mand
+defn mer
+inp 3  
+sto mer
+sto loop
+inp 5
+sto mand
+sto tot
 
 dec loop
-fr loop
+ret loop
 prt
-jmp moo
+goto moo
 
 end 0
     </textarea>
     <p><button onclick="getAssemblerAndRun()">Run</button>
       Output: <span id="assembleroutput"></span></p>
-<br><br><br>
+    <br><br><br>
+  </div>
 
 
-<textarea id="Btext" rows="10" cols="30">
-  in 5  
-  to r0
-  in 0
-  to r1
-  in 3
-  to r2
-  
-  label looper
-  fr r2
-  jif done
-  fr r1
-  add r0
-  to r1
-  dec r2  
-  jmp looper
-  
-  label done
-  fr r1
-  prt
-  end 0
 
-      </textarea>
-      <p><button onclick="getBtextAndRun()">Run</button>
-        Output: <span id="Boutput"></span></p>
-  <br><br><br>
+  <div>
+    <p>Structure and operations</p>
+    <table>
+      <tr>
+        <td>The computer is created with:</td>
+        <td><code>let _ = new simpleComputer()</code></td>
+      </tr>
+      <tr>
+        <td>And run with:</td>
+        <td><code>      _.run(code, debug)</code></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Machine code</th>
+        <th> Opcode</th>
+        <th> Assembly code</th>
+        <th> Symbolic</th>
+        <th> Description</th>
+      </tr>
+      <tr>
+        <td>000</td>
+        <td> 0</td>
+        <td> inp</td>
+        <td> [val] => acc </td>
+        <td> input [val] to accumulator</td>
+      </tr>
+      <tr>
+        <td>001</td>
+        <td> 1</td>
+        <td> sto</td>
+        <td> acc => mem[loc] </td>
+        <td> store accumulator to memory at [loc]</td>
+      </tr>
+      <tr>
+        <td>010</td>
+        <td> 2</td>
+        <td> ret</td>
+        <td> mem[loc] => acc </td>
+        <td> retrive memory at [loc] to accumulator</td>
+      </tr>
+      <tr>
+        <td>011</td>
+        <td> 3</td>
+        <td> add</td>
+        <td> acc + mem[loc] => acc</td>
+        <td> add memory at [loc] to acc and store in acc</td>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td> 4</td>
+        <td> dec</td>
+        <td> mem[] -1 => mem[]</td>
+        <td> decrement memory at [loc]</td>
+      </tr>
+      <tr>
+        <td>101</td>
+        <td> 5</td>
+        <td> cjp</td>
+        <td> if(acc=0) jump[]</td>
+        <td> jump to instruction [num] (if acc = 0)</td>
+      </tr>
+      <tr>
+        <td>110</td>
+        <td> 6</td>
+        <td> jmp</td>
+        <td> jump[]</td>
+        <td> jump to instruction </td>
+      </tr>
+      <tr>
+        <td>111</td>
+        <td> 7</td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>-VM-</td>
+        <td> 8</td>
+        <td> prt</td>
+        <td> print([] or acc)</td>
+        <td> print [val] (or acc if val = 0) to virtual buffer </td>
+      </tr>
+      <tr>
+        <td>-VM-</td>
+        <td> 9</td>
+        <td> end</td>
+        <td> End, print [] and return </td>
+        <td> end (virtual machine ends and retuns buffer)</td>
+      </tr>
 
-</div>
+    </table>
+    <br />
+    <table>
+      <tr>
+        <td>Acc(umulator)</td>
+      </tr>
+      <tr>
+        <td>mem[0,1,2,3,4]</td>
+      </tr>
+      <tr>
+        <td>Instructions [[],[]]</td>
+      </tr>
+      <tr>
+        <td>currentLine </td>
+      </tr>
+
+    </table>
+
+
+  </div>
+
 </body>
-<script src="./machine.js"></script>
-<script src="./assembler.js"></script>
-<script src="./debugger.js"></script>
-
-<script>
-let comp = new simpleComputer()
-
-function getDataAndRun(){
-    
-    const numberOfEntryLines = 9
-    instructions = []
-    for (let i = 0; i < numberOfEntryLines ; i++) {
-         instructions.push([
-            Number(document.getElementById((i) + 'A').value),
-            Number(document.getElementById((i) + 'B').value)
-        ])
-        
-    } 
-    // console.log(instructions);
-    let result = comp.run(instructions)
-    document.getElementById('output').innerHTML = result
-}
 
 
-function getAssemblerAndRun() {
-  text = document.getElementById('assemblertext').value
-  code = advancedAssembler(splitText(text))
-  console.log(code);
-  let result = comp.run(code)
-  document.getElementById('assembleroutput').innerHTML = result
-}
-
-
-function getBtextAndRun() {
-  text = document.getElementById('Btext').value
-  code = advancedAssembler(bLang(splitText(text)))
-  let result = comp.run(code, logToConsole)
-  document.getElementById('Boutput').innerHTML = result
-}
-
-
-</script>
 </html>
