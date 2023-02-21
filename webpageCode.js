@@ -20,9 +20,9 @@ function getDataAndRun () {
 
 function getAssemblerAndRun () {
   const text = document.getElementById('assemblertext').value
-  const code = advancedAssembler(splitText(text))
+  // const code = advancedAssembler(splitText(text))
   // const code = assembler(splitText(text))
-  // code = splitText(text)
+  code = splitText(text)
   console.log(code)
   const result = comp.run(code, logToConsole)
   document.getElementById('assembleroutput').innerHTML = result
