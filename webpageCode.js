@@ -21,6 +21,7 @@ function getDataAndRun () {
 function getAssemblerAndRun () {
   const text = document.getElementById('assemblertext').value
   const code = advancedAssembler(splitText(text))
+  // const code = assembler(splitText(text))
   // code = splitText(text)
   console.log(code)
   const result = comp.run(code, logToConsole)
@@ -43,9 +44,7 @@ function save () {
   const saves = (localStorage.saves) ? JSON.parse(localStorage.saves) : []
   // console.log(saves);
   const text = document.getElementById('assemblertext').value
-  // console.log(JSON.stringify(text))
   saves.push(JSON.stringify(text))
-  // console.log(saves);
   currentSave = saves.length
   localStorage.saves = JSON.stringify(saves)
   console.log(JSON.parse(localStorage.saves))

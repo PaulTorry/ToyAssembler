@@ -1,3 +1,5 @@
+/* eslint-disable no-multiple-empty-lines, no-unused-vars */
+
 function formatDebugForConsole (debug) {
   const pad = x => x.toString().padStart(3, ' ')
 

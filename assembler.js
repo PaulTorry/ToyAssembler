@@ -46,7 +46,7 @@ function bLang (separated) {
     if (com === 'inc') {
       replaced.push(['to', 'r0'], ['in', 1], ['add', vals[0]], ['to', vals[0]], ['fr', 'r0'])
     } if (com === 'mult') {
-      replaced.push(['to', 'r0'], ['fr', 1], ['add', vals[0]], ['to', vals[0]], ['fr', 'r0'])
+      // replaced.push(['to', 'r0'])
     } else {
       replaced.push([com, ...vals])
     }
