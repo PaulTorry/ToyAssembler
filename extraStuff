@@ -16,3 +16,127 @@ prt
 to 0  
 in 0 
 if 2
+
+
+basic add
+in 5  
+to 0  
+in 4   
+add 0  
+prt   
+end 0 
+
+increment B assCode
+def hat
+in 5
+to hat 
+inc hat
+prt
+end 0  
+
+
+
+multiply broken
+in 5  
+to r0
+to r1
+in 3
+to r2
+
+label looper
+fr r2
+jif done
+fr r1
+add r0
+to r1
+dec r2  
+jmp looper
+
+label done
+fr r1
+prt
+end
+
+
+
+function parseAssembler (text) { // eslint-disable-line no-unused-vars
+    // console.log(text)
+    const lines = text.split('\n')
+    // console.log(lines)
+    const trimmed = lines.map((x) => x.trim())
+    // console.log(trimmed)
+    const separated = trimmed.map((x) => x.split(' '))
+    // console.log(...separated)
+    separated.forEach((e, i) => { if (e.length > 2) console.log('to many words', e, i) })
+    const replaced = separated.map(([com, val]) => [assCode.indexOf(com), Number(val)])
+    // console.log(...replaced)
+  
+    return replaced
+  }
+
+
+
+  inp 5  
+  sto r0
+  inp 0
+  sto r1
+  inp 3
+  sto r2
+             prt 1
+  label looper
+             prt 2
+  ret r2
+  goif done
+  ret r1
+  add r0
+  sto r1
+  dec r2  
+            prt 3
+  goto looper
+            prt 4
+           prt 5
+  label done
+           prt 6
+            prt 7
+  ret r1
+  prt 
+  end 
+
+
+multiplier code
+  inp 5  
+  sto r0
+  inp 0
+  sto r1
+  inp 3
+  sto r2
+  
+  label looper
+  ret r2
+  goif done
+  ret r1
+  add r0
+  sto r1
+  dec r2  
+  goto looper
+  
+  label done
+  ret r1
+  prt 
+  end 
+
+
+  <select id="saveNameSel">
+    <option value='1 Add nums'>1 Add nums</option>
+    <option value='B Multiplier'>B Multiplier</option>
+  </select> 
+   
+  #savename {
+        width: 70px;
+        }
+    <input type="text" id="savename" value="demo">
+
+
+    
+
+
