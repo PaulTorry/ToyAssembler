@@ -1,0 +1,23 @@
+  defn muliplier
+  defn numberOfLoops
+  defn total
+  inp 5  
+  sto mulipplier
+  inp 0
+  sto numberOfLoops
+  inp 3
+  sto total
+  
+  label looper
+  ret total
+  goif done
+  ret numberOfLoops
+  add mulipplier
+  sto numberOfLoops
+  dec total  
+  goto looper
+  
+  label done
+  ret numberOfLoops
+  prt 
+  end 
