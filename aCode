@@ -2,7 +2,7 @@
   defn numberOfLoops
   defn total
   inp 5  
-  sto mulipplier
+  sto muliplier
   inp 0
   sto numberOfLoops
   inp 3
@@ -12,7 +12,7 @@
   ret total
   goif done
   ret numberOfLoops
-  add mulipplier
+  add muliplier
   sto numberOfLoops
   dec total  
   goto looper
@@ -21,3 +21,18 @@
   ret numberOfLoops
   prt 
   end 
+
+
+
+
+
+increment
+  defn r0
+  defn r1
+  inp 7  
+  sto r1
+  inc r1
+  prt 
+  end
+
+

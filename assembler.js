@@ -11,10 +11,11 @@ function advancedAssembler (separated) { // eslint-disable-line no-unused-vars
 
   separated.forEach((v, i, a) => {
     const [com, val] = v
+    const value = variables.indexOf(val) + 1 ? variables.indexOf(val) : Number(val)
     if (com && Number(com) + 1) {
       replaced.push([Number(com), Number(val)])
     } else if (assCode.indexOf(com) + 1) {
-      const value = variables.indexOf(val) + 1 ? variables.indexOf(val) : Number(val)
+    //    const value = variables.indexOf(val) + 1 ? variables.indexOf(val) : Number(val)
       replaced.push([assCode.indexOf(com), value])
     } else if (com === 'defn') {
       variables.push(val)
@@ -22,6 +23,8 @@ function advancedAssembler (separated) { // eslint-disable-line no-unused-vars
       labels.push([val, replaced.length])
     } else if (com === 'goto') {
       replaced.push(['goto', val])
+    } else if (com === 'inc') {
+      replaced.push([0, 1], [3, value], [1, value])
     } else if (com === 'goif') {
       replaced.push(['goif', val])
     } else { console.log('command not found', v) }
